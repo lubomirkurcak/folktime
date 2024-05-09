@@ -13,9 +13,6 @@ use duration::Duration;
 ///
 /// let d = Folktime::duration(Duration::from_secs(5));
 /// assert_eq!(format!("{}", d), "5.00s");
-///
-/// let s = d.to_string();
-/// assert_eq!(s, "5.00s");
 /// ```
 pub struct Folktime;
 
@@ -23,51 +20,47 @@ impl Folktime {
     /// Used for formatting [std::time::Duration] in a human-friendly way.
     ///
     /// # Example
-    /// ```
+    /// ```rust
     /// use std::time::Duration;
     /// use folktime::Folktime;
     ///
     /// let d = Folktime::duration(Duration::from_secs(5));
     /// assert_eq!(format!("{}", d), "5.00s");
-    ///
-    /// let s = d.to_string();
-    /// assert_eq!(s, "5.00s");
     /// ```
     ///
-    /// # Note
+    /// # Precision
+    ///
     /// Formatting only shows the most significant digits:
-    /// ```
+    /// ```rust
     /// use std::time::Duration;
     /// use folktime::Folktime;
-    ///
-    /// let d = Folktime::duration(Duration::new(0, 123_456_789));
-    /// assert_eq!(format!("{}", d), "123ms");
-    ///
-    /// let d = Folktime::duration(Duration::new(1, 123_456_789));
-    /// assert_eq!(format!("{}", d), "1.12s");
-    ///
-    /// let d = Folktime::duration(Duration::new(12, 123_456_789));
-    /// assert_eq!(format!("{}", d), "12.1s");
-    ///
+    ///  
+    /// let a = Folktime::duration(Duration::new(0, 123_456_789));
+    /// let b = Folktime::duration(Duration::new(1, 123_456_789));
+    /// let c = Folktime::duration(Duration::new(12, 123_456_789));
     /// let d = Folktime::duration(Duration::new(123, 123_456_789));
+    ///
+    /// assert_eq!(format!("{}", a), "123ms");
+    /// assert_eq!(format!("{}", b), "1.12s");
+    /// assert_eq!(format!("{}", c), "12.1s");
     /// assert_eq!(format!("{}", d), "2.05m");
     /// ```
     ///
-    /// # Formatting
+    /// # Formatting styles
     /// There are several styles for formatting:
-    /// ```
+    /// ```rust
     /// use std::time::Duration;
     /// use folktime::Folktime;
     /// use folktime::duration::Style;
     ///
-    /// let d = Folktime::duration(Duration::new(0, 12_056_999));
-    /// assert_eq!(format!("{}", d), "12.0ms");
     ///
-    /// let d = Folktime::duration(Duration::new(0, 12_056_999)).with_style(Style::OneUnitWhole);
-    /// assert_eq!(format!("{}", d), "12ms");
+    /// let a = Folktime::duration(Duration::new(0, 12_056_999));
+    /// let b = Folktime::duration(Duration::new(0, 12_056_999)).with_style(Style::OneUnitWhole);
+    /// let c = Folktime::duration(Duration::new(0, 12_056_999)).with_style(Style::TwoUnitsWhole);
     ///
-    /// let d = Folktime::duration(Duration::new(0, 12_056_999)).with_style(Style::TwoUnitsWhole);
-    /// assert_eq!(format!("{}", d), "12ms 56us");
+    /// assert_eq!(format!("{}", a), "12.0ms");
+    /// assert_eq!(format!("{}", b), "12ms");
+    /// assert_eq!(format!("{}", c), "12ms 56us");
     /// ```
     pub const fn duration(d: std::time::Duration) -> Duration {
         Duration(d, duration::Style::OneUnitThreeDigits)

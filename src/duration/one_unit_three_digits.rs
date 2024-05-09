@@ -109,6 +109,16 @@ mod tests {
         let d = Folktime::duration(Duration::new(u64::MAX, 999_999_999)).with_style(STYLE);
         assert_eq!(format!("{}", d), "584Gy");
     }
+    #[test]
+    fn test() {
+        let d = Folktime::duration(std::time::Duration::from_secs(12345689)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "4.69mo");
+    }
+    #[test]
+    fn test2() {
+        let d = Folktime::duration(std::time::Duration::from_secs(1234568)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "2.04w");
+    }
 
     #[test]
     fn ns_0() {
