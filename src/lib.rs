@@ -32,9 +32,9 @@ impl Folktime {
     ///
     /// Formatting only shows the most significant digits:
     /// ```rust
-    /// use std::time::Duration;
-    /// use folktime::Folktime;
-    ///  
+    /// # use std::time::Duration;
+    /// # use folktime::Folktime;
+    /// #
     /// let a = Folktime::duration(Duration::new(0, 123_456_789));
     /// let b = Folktime::duration(Duration::new(1, 123_456_789));
     /// let c = Folktime::duration(Duration::new(12, 123_456_789));
@@ -49,10 +49,9 @@ impl Folktime {
     /// # Formatting styles
     /// There are several styles for formatting:
     /// ```rust
-    /// use std::time::Duration;
-    /// use folktime::Folktime;
+    /// # use std::time::Duration;
+    /// # use folktime::Folktime;
     /// use folktime::duration::Style;
-    ///
     ///
     /// let a = Folktime::duration(Duration::new(0, 12_056_999));
     /// let b = Folktime::duration(Duration::new(0, 12_056_999)).with_style(Style::OneUnitWhole);

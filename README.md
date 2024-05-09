@@ -53,7 +53,7 @@ assert_eq!(format!("{}", b), "12ms");
 assert_eq!(format!("{}", c), "12ms 56us");
 ```
 
-Here's a comparison of all styles:
+Here's a comparison of styles:
 
 | Duration   | `Style::OneUnitFractional` | `Style::OneUnitWhole` | `Style::TwoUnitsWhole` |
 |------------|----------------------------|-----------------------|------------------------|
