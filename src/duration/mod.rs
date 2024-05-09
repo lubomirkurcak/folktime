@@ -1,4 +1,4 @@
-pub mod one_unit_three_digits;
+pub mod one_unit_fractional;
 pub mod one_unit_whole;
 pub mod two_units_whole;
 
@@ -20,7 +20,7 @@ const MS: u32 = 1_000 * US;
 #[derive(Default)]
 pub enum Style {
     #[default]
-    OneUnitThreeDigits,
+    OneUnitFractional,
     OneUnitWhole,
     TwoUnitsWhole,
 }
@@ -40,7 +40,7 @@ impl Duration {
 impl Display for Duration {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self.1 {
-            Style::OneUnitThreeDigits => self.fmt_one_unit_three_digits(f),
+            Style::OneUnitFractional => self.fmt_one_unit_fractional(f),
             Style::OneUnitWhole => self.fmt_one_unit_whole(f),
             Style::TwoUnitsWhole => self.fmt_two_units_whole(f),
         }

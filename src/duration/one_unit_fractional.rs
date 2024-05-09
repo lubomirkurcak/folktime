@@ -36,7 +36,7 @@ fn fmt_100(val: u64, div: u64, unit: &str, f: &mut std::fmt::Formatter) -> std::
 }
 
 impl Duration {
-    pub fn fmt_one_unit_three_digits(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn fmt_one_unit_fractional(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let secs = self.0.as_secs();
         let ns = self.0.subsec_nanos();
 
@@ -97,7 +97,7 @@ mod tests {
     use crate::{duration::Style, Folktime};
     use std::time::Duration;
 
-    const STYLE: Style = Style::OneUnitThreeDigits;
+    const STYLE: Style = Style::OneUnitFractional;
 
     #[test]
     fn zero() {
