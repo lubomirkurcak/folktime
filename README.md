@@ -55,7 +55,7 @@ assert_eq!(format!("{}", c), "12ms 56us");
 
 Here's a comparison of styles:
 
-| Duration   | [`Style::OneUnitFrac`]() | [`Style::OneUnitWhole`]() | [`Style::TwoUnitsWhole`]() |
+| Duration   | [`Style::OneUnitFrac`](https://docs.rs/folktime/latest/folktime/duration/enum.Style.html#variant.OneUnitFrac) | [`Style::OneUnitWhole`](https://docs.rs/folktime/latest/folktime/duration/enum.Style.html#variant.OneUnitWhole) | [`Style::TwoUnitsWhole`](https://docs.rs/folktime/latest/folktime/duration/enum.Style.html#variant.TwoUnitsWhole) |
 |------------|----------------------|-----------------------|------------------------|
 | 0s         | `0.00s`              | `0s`                  | `0s 0ms`               |
 | 0.123456s  | `123ms`              | `123ms`               | `123ms 456us`          |
