@@ -62,6 +62,6 @@ impl Folktime {
     /// assert_eq!(format!("{}", c), "12ms 56us");
     /// ```
     pub const fn duration(d: std::time::Duration) -> Duration {
-        Duration(d, duration::Style::OneUnitFractional)
+        Duration(d, duration::Style::OneUnitFrac)
     }
 }
