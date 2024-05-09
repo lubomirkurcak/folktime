@@ -2,6 +2,8 @@
 
 Library for formatting [std::time::Duration](https://doc.rust-lang.org/stable/core/time/struct.Duration.html) in a human-friendly way.
 
+If you are looking for a full precision human readable format, take a look at [humantime](https://crates.io/crates/humantime).
+
 ### Usage
 
 ```rust
