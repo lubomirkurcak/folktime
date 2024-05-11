@@ -1,4 +1,4 @@
-use super::{Duration, DAY, HOUR, MIN, MONTH, MS, US, WEEK, YEAR};
+use super::{Duration, DAY, GIGA_YEAR, HOUR, KILO_YEAR, MEGA_YEAR, MIN, MONTH, MS, US, WEEK, YEAR};
 
 impl Duration {
     pub fn fmt_one_unit_whole(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -36,9 +36,18 @@ impl Duration {
         } else if secs < YEAR {
             let months = secs / MONTH;
             write!(f, "{months}mo")
-        } else {
+        } else if secs < KILO_YEAR {
             let years = secs / YEAR;
             write!(f, "{years}y")
+        } else if secs < MEGA_YEAR {
+            let kilo_years = secs / KILO_YEAR;
+            write!(f, "{kilo_years}ky")
+        } else if secs < GIGA_YEAR {
+            let mega_years = secs / MEGA_YEAR;
+            write!(f, "{mega_years}My")
+        } else {
+            let giga_years = secs / GIGA_YEAR;
+            write!(f, "{giga_years}Gy")
         }
     }
 }
@@ -46,7 +55,10 @@ impl Duration {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{duration::Style, Folktime};
+    use crate::{
+        duration::{Style, GIGA_YEAR, MEGA_YEAR},
+        Folktime,
+    };
 
     const STYLE: Style = Style::OneUnitWhole;
 
@@ -59,7 +71,7 @@ mod tests {
     fn max() {
         let d =
             Folktime::duration(std::time::Duration::new(u64::MAX, 999_999_999)).with_style(STYLE);
-        assert_eq!(format!("{}", d), "584531858607y");
+        assert_eq!(format!("{}", d), "584Gy");
     }
     #[test]
     fn test() {
@@ -299,7 +311,88 @@ mod tests {
     }
     #[test]
     fn y_5() {
+        let d = Folktime::duration(std::time::Duration::new(1000 * YEAR - 1, 999_999_999))
+            .with_style(STYLE);
+        assert_eq!(format!("{}", d), "999y");
+    }
+
+    #[test]
+    fn ky_0() {
         let d = Folktime::duration(std::time::Duration::new(1000 * YEAR, 0)).with_style(STYLE);
-        assert_eq!(format!("{}", d), "1000y");
+        assert_eq!(format!("{}", d), "1ky");
+    }
+    #[test]
+    fn ky_1() {
+        let d = Folktime::duration(std::time::Duration::new(
+            1000 * YEAR + YEAR - 1,
+            999_999_999,
+        ))
+        .with_style(STYLE);
+        assert_eq!(format!("{}", d), "1ky");
+    }
+    #[test]
+    fn ky_2() {
+        let d =
+            Folktime::duration(std::time::Duration::new(1000 * YEAR + YEAR, 0)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "1ky");
+    }
+    #[test]
+    fn ky_3() {
+        let d = Folktime::duration(std::time::Duration::new(MEGA_YEAR - 1, 999_999_999))
+            .with_style(STYLE);
+        assert_eq!(format!("{}", d), "999ky");
+    }
+
+    #[test]
+    fn my_0() {
+        let d = Folktime::duration(std::time::Duration::new(MEGA_YEAR, 0)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "1My");
+    }
+    #[test]
+    fn my_1() {
+        let d = Folktime::duration(std::time::Duration::new(
+            MEGA_YEAR + 1000 * YEAR - 1,
+            999_999_999,
+        ))
+        .with_style(STYLE);
+        assert_eq!(format!("{}", d), "1My");
+    }
+    #[test]
+    fn my_2() {
+        let d = Folktime::duration(std::time::Duration::new(MEGA_YEAR + 1000 * YEAR, 0))
+            .with_style(STYLE);
+        assert_eq!(format!("{}", d), "1My");
+    }
+    #[test]
+    fn my_3() {
+        let d = Folktime::duration(std::time::Duration::new(GIGA_YEAR - 1, 999_999_999))
+            .with_style(STYLE);
+        assert_eq!(format!("{}", d), "999My");
+    }
+
+    #[test]
+    fn gy_0() {
+        let d = Folktime::duration(std::time::Duration::new(GIGA_YEAR, 0)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "1Gy");
+    }
+    #[test]
+    fn gy_1() {
+        let d = Folktime::duration(std::time::Duration::new(
+            GIGA_YEAR + MEGA_YEAR - 1,
+            999_999_999,
+        ))
+        .with_style(STYLE);
+        assert_eq!(format!("{}", d), "1Gy");
+    }
+    #[test]
+    fn gy_2() {
+        let d = Folktime::duration(std::time::Duration::new(GIGA_YEAR + MEGA_YEAR, 0))
+            .with_style(STYLE);
+        assert_eq!(format!("{}", d), "1Gy");
+    }
+    #[test]
+    fn gy_3() {
+        let d = Folktime::duration(std::time::Duration::new(500 * GIGA_YEAR, 0)).with_style(STYLE);
+        assert_eq!(format!("{}", d), "500Gy");
     }
 }
