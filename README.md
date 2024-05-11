@@ -1,5 +1,6 @@
 # folktime
 
+[![Build status](https://github.com/lubomirkurcak/folktime/workflows/Test/badge.svg)](https://github.com/lubomirkurcak/folktime/actions)
 [![Crates.io](https://img.shields.io/crates/v/folktime.svg)](https://crates.io/crates/folktime)
 
 Tiny library for approximate formatting of [std::time::Duration](https://doc.rust-lang.org/stable/core/time/struct.Duration.html) in a human-friendly way.
